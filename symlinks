@@ -8,5 +8,6 @@ ssh/config:$HOME/.ssh/config
 k9s/config.yaml:$HOME/.config/k9s/config.yaml
 k9s/skins:$HOME/.config/k9s/skins
 yabai/yabairc:$HOME/.config/yabai/yabairc
-skhd/skhdrc:$HOME/.config/skhd/skhdrc
+skhd/skhdrc:$HOME/.skhdrc
 herdr/config.toml:$HOME/.config/herdr/config.toml
+git/gitconfig:$HOME/.gitconfig

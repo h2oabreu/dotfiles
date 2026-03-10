@@ -1,0 +1,21 @@
+[user]
+	name = Hugo Abreu
+	email = hugo.miguel.abreu@gmail.com
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+[diff]
+	algorithm = histogram
+	colorMoved = default
+[rerere]
+	enabled = true
+[commit]
+	verbose = true
+[branch]
+	sort = -committerdate
