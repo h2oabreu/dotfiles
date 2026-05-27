@@ -21,6 +21,9 @@ plugins=(git mvn tmux)
 
 if type brew &>/dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  # granted ships completions as _assume / _granted in these dirs
+  [[ -d "$HOME/.granted/zsh_autocomplete/assume" ]]  && FPATH="$HOME/.granted/zsh_autocomplete/assume:${FPATH}"
+  [[ -d "$HOME/.granted/zsh_autocomplete/granted" ]] && FPATH="$HOME/.granted/zsh_autocomplete/granted:${FPATH}"
   autoload -Uz compinit
   compinit
 fi
@@ -40,6 +43,8 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # --- Aliases ---
 alias k="kubectl"
 command -v podman &>/dev/null && alias docker="podman"
+# granted: `source assume` so AWS_* exports land in the parent shell
+command -v assume &>/dev/null && alias assume="source assume"
 
 # --- Containers (kind + podman) ---
 command -v podman &>/dev/null && export KIND_EXPERIMENTAL_PROVIDER=podman
@@ -54,6 +59,11 @@ if command -v kind &>/dev/null; then
 fi
 if command -v helm &>/dev/null; then
   source <(helm completion zsh)
+fi
+# aws cli uses bash-style completion via aws_completer
+if command -v aws_completer &>/dev/null; then
+  autoload -U +X bashcompinit && bashcompinit
+  complete -C "$(command -v aws_completer)" aws
 fi
 
 # --- PATH ---

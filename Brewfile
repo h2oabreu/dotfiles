@@ -1,5 +1,6 @@
 # Taps
 tap "koekeishiya/formulae"
+tap "common-fate/granted"
 
 # --- Terminal & Shell ---
 cask "ghostty"
@@ -28,6 +29,10 @@ cask "podman-desktop"
 brew "kubectl"
 brew "kind"
 brew "helm"
+
+# --- Cloud / AWS ---
+brew "awscli"
+brew "granted"
 
 # --- Window Management ---
 brew "yabai"
