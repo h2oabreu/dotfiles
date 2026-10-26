@@ -11,10 +11,10 @@ onboarding = false
 # still answers on its own backup prefix (tmux.conf `prefix2 C-b`).
 prefix = "ctrl+space"
 
-# The one key that differs from tmux, which splits vertically on `|`.
-# `prefix+|` is valid here, but punctuation bindings are terminal-dependent and
-# this is a PT-PT keyboard (see the `[` note in tmux.conf), so keep the letter.
-split_vertical = "prefix+v"
+# Matches tmux's `|` for vertical split. Punctuation bindings are
+# terminal-dependent, so if this stops registering on the PT-PT layout
+# (see the `[` note in tmux.conf), fall back to "prefix+v".
+split_vertical = "prefix+|"
 
 [theme]
 # gruvbox is the closest built-in to Everforest, then overridden below to
