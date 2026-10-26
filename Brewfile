@@ -4,7 +4,8 @@ tap "common-fate/granted"
 
 # --- Terminal & Shell ---
 cask "ghostty"
-brew "tmux"
+brew "herdr" # default multiplexer; autostarts from zshrc
+brew "tmux"  # kept as a fallback, no longer autostarts
 brew "fzf"
 brew "neovim"
 brew "bash" # macOS ships bash 3.2; SDKMAN and other installers need 4+

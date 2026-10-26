@@ -1,0 +1,50 @@
+# herdr -- terminal workspace manager for AI coding agents.
+# Symlinked to ~/.config/herdr/config.toml (see `symlinks`).
+# Reload in a running server without restarting: `hrdrrc`.
+# Full annotated template of every option: `herdr --default-config`.
+
+onboarding = false
+
+[keys]
+# Same prefix as tmux, so the muscle memory carries over unchanged.
+# This also frees Ctrl+b: a tmux deliberately nested inside a herdr pane
+# still answers on its own backup prefix (tmux.conf `prefix2 C-b`).
+prefix = "ctrl+space"
+
+# The one key that differs from tmux, which splits vertically on `|`.
+# `prefix+|` is valid here, but punctuation bindings are terminal-dependent and
+# this is a PT-PT keyboard (see the `[` note in tmux.conf), so keep the letter.
+split_vertical = "prefix+v"
+
+[theme]
+# gruvbox is the closest built-in to Everforest, then overridden below to
+# match Ghostty, tmux and Neovim. Palette source: tmux/tmux.conf @thm_* vars.
+name = "gruvbox"
+auto_switch = false
+
+[theme.custom]
+sidebar_bg = "#1e2326"      # @thm_bg / crust
+panel_bg = "reset"          # inherit Ghostty's own background
+active_row_bg = "#2e383c"   # @thm_surface_1
+selection_bg = "#374145"    # @thm_surface_2
+accent = "#a7c080"          # @thm_green -- Everforest's signature
+red = "#e67e80"             # @thm_red
+green = "#a7c080"           # @thm_green
+
+[ui]
+status_indicators = "symbols"
+
+[ui.toast]
+# Hand notifications to Ghostty as real desktop notifications.
+# Replaces the old terminal-notifier Stop hook in ~/.claude/settings.json.
+delivery = "terminal"
+
+[session]
+# Resume agent panes into their native conversation sessions after a server
+# restart -- the agent-aware counterpart to tmux-resurrect.
+resume_agents_on_restore = true
+
+[experimental]
+# Keep pane scrollback across full server restarts.
+# Closest equivalent to @resurrect-capture-pane-contents, which this setup drops.
+pane_history = true

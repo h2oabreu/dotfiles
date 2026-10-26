@@ -9,15 +9,16 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 ENABLE_CORRECTION="false"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-# tmux autostart: only if real TTY attached, never exit shell on failure
-if [[ "$DOTFILES_NO_TMUX" != "1" ]] && command -v tmux &>/dev/null && [[ -t 0 ]]; then
+# tmux no longer autostarts -- herdr is the default multiplexer (see end of file).
+# Opt back in for one shell with: DOTFILES_TMUX_AUTOSTART=1 zsh -l
+if [[ "$DOTFILES_TMUX_AUTOSTART" == "1" ]] && command -v tmux &>/dev/null && [[ -t 0 ]]; then
   ZSH_TMUX_AUTOSTART=true
   ZSH_TMUX_AUTOQUIT=false  # never exit shell if tmux fails — prevents lockout
 else
   ZSH_TMUX_AUTOSTART=false
 fi
 
-plugins=(git mvn tmux)
+plugins=(git mvn tmux herdr)
 
 if type brew &>/dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -43,6 +44,7 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # --- Aliases ---
 alias k="kubectl"
 command -v podman &>/dev/null && alias docker="podman"
+alias docker="podman"
 # granted: `source assume` so AWS_* exports land in the parent shell
 command -v assume &>/dev/null && alias assume="source assume"
 
@@ -164,3 +166,15 @@ export NVM_DIR="$HOME/.nvm"
 
 # --- Machine-specific overrides (not in dotfiles repo) ---
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+
+# --- herdr autostart (keep last: ~/.zshrc.local may set DOTFILES_NO_HERDR) ---
+# Only for a real interactive TTY, never inside an existing herdr pane or a
+# tmux session, and never fatal -- a failed launch must leave a usable shell.
+# herdr needs ~/.local/bin, which only joins PATH above, so this cannot move up.
+if [[ "$DOTFILES_NO_HERDR" != "1" ]] \
+  && [[ "$HERDR_ENV" != "1" ]] \
+  && [[ -z "$TMUX" ]] \
+  && [[ -t 0 ]] \
+  && command -v herdr &>/dev/null; then
+  herdr || true
+fi

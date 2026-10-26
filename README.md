@@ -5,9 +5,10 @@ Opinionated, terminal-first developer environment for macOS and headless Linux m
 ## What's included
 
 - **Ghostty** -- GPU-accelerated terminal (macOS), Everforest Dark Hard theme
-- **tmux** -- Omarchy-inspired keybindings, Catppuccin status bar with Everforest palette, auto-save/restore via Continuum
+- **herdr** -- default multiplexer, built for AI coding agents; `Ctrl+Space` prefix, Everforest palette
+- **tmux** -- Omarchy-inspired keybindings, Catppuccin status bar with Everforest palette, auto-save/restore via Continuum (no longer autostarts)
 - **Neovim** -- LazyVim with bamboo.nvim colorscheme
-- **zsh** -- Oh My Zsh with robbyrussell theme, tmux autostart
+- **zsh** -- Oh My Zsh with robbyrussell theme, herdr autostart
 - **1Password SSH** -- SSH agent backed by 1Password on macOS (auto-skipped on Linux)
 - **k9s** -- Kubernetes TUI with Everforest Dark Hard skin
 - **Kubernetes tools** -- kubectl, helm, kind, k9s (Brewfile on macOS, binary downloads on Linux)
@@ -75,6 +76,7 @@ dotfiles/
 ├── ssh/
 │   ├── config              # SSH config (1Password via Match exec)
 │   └── config.local.example
+├── herdr/config.toml       # herdr config (prefix, theme, agent sessions)
 ├── tmux/tmux.conf          # tmux config
 ├── zsh/
 │   ├── zshrc               # Main shell config

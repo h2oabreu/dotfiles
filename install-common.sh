@@ -78,13 +78,22 @@ if command -v tmux &>/dev/null; then
   fi
 fi
 
+if command -v herdr &>/dev/null; then
+  if herdr config check 2>/dev/null | grep -q "^config: ok"; then
+    ok "herdr config is valid"
+  else
+    warn "herdr config has issues — run 'herdr config check' to see details"
+  fi
+fi
+
 # ─── Done ────────────────────────────────────────────────────
 echo ""
 ok "Setup complete!"
 echo ""
 echo "  Next steps:"
 echo "  1. Edit ~/.zshrc.local for machine-specific settings"
-echo "  2. Start a new shell session — tmux starts automatically"
-echo "  3. Inside tmux: Ctrl+Space I to install plugins, Ctrl+Space q to reload config"
-echo "  4. Cheatsheet at ~/tmux-cheatsheet.md"
+echo "  2. Start a new shell session — herdr starts automatically"
+echo "  3. Prefix is Ctrl+Space (same as tmux): Ctrl+Space ? for help, v to split"
+echo "  4. tmux no longer autostarts — run 'tmux', or DOTFILES_TMUX_AUTOSTART=1 zsh -l"
+echo "  5. Cheatsheet at ~/tmux-cheatsheet.md"
 echo ""
