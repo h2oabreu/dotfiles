@@ -17,6 +17,12 @@ if ! command -v brew &>/dev/null; then
 fi
 
 info "Installing packages from Brewfile..."
-HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file="$DOTFILES/Brewfile" || warn "Some packages may have failed (non-fatal)"
+# Non-fatal so symlinks still get created, but the failure is re-reported at the
+# end of install-common.sh -- otherwise "Setup complete!" hides missing tools.
+DOTFILES_BUNDLE_FAILED=0
+if ! HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --file="$DOTFILES/Brewfile"; then
+  DOTFILES_BUNDLE_FAILED=1
+  warn "brew bundle failed — continuing; missing packages are listed at the end"
+fi
 
 source "$DOTFILES/install-common.sh"

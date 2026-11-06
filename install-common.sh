@@ -87,12 +87,35 @@ if command -v herdr &>/dev/null; then
 fi
 
 # ─── Done ────────────────────────────────────────────────────
+problems=0
+
+# Set by install.sh (macOS only); install-server.sh leaves it unset.
+if [[ "${DOTFILES_BUNDLE_FAILED:-0}" == "1" ]]; then
+  problems=1
+  echo ""
+  warn "brew bundle failed. Brewfile entries still missing or outdated:"
+  HOMEBREW_NO_AUTO_UPDATE=1 brew bundle check --verbose --file="$DOTFILES/Brewfile" 2>&1 \
+    | grep '^→' || true
+  warn "Fix the errors above, then re-run: brew bundle --file=$DOTFILES/Brewfile"
+fi
+
+if ! command -v herdr &>/dev/null; then
+  problems=1
+  echo ""
+  warn "herdr is not installed, so it will NOT autostart in new shells."
+  warn "Install it (brew install herdr), then open a new shell."
+fi
+
 echo ""
-ok "Setup complete!"
+if (( problems )); then
+  warn "Setup finished with problems — see the warnings above."
+else
+  ok "Setup complete!"
+fi
 echo ""
 echo "  Next steps:"
 echo "  1. Edit ~/.zshrc.local for machine-specific settings"
-echo "  2. Start a new shell session — herdr starts automatically"
+echo "  2. Start a new shell session — herdr starts automatically once installed"
 echo "  3. Prefix is Ctrl+Space (same as tmux): Ctrl+Space ? for help, v to split"
 echo "  4. tmux no longer autostarts — run 'tmux', or DOTFILES_TMUX_AUTOSTART=1 zsh -l"
 echo "  5. Cheatsheet at ~/tmux-cheatsheet.md"

@@ -1,5 +1,5 @@
 # Taps
-tap "koekeishiya/formulae"
+tap "asmvik/formulae" # formerly koekeishiya/formulae (yabai, skhd)
 tap "common-fate/granted"
 
 # --- Terminal & Shell ---
@@ -36,8 +36,8 @@ brew "awscli"
 brew "granted"
 
 # --- Window Management ---
-brew "yabai"
-brew "skhd"
+brew "asmvik/formulae/yabai", trusted: true # Homebrew 6+ refuses untrusted third-party taps
+brew "asmvik/formulae/skhd", trusted: true
 
 # --- Apps ---
 cask "1password"
