@@ -48,3 +48,12 @@ resume_agents_on_restore = true
 # Keep pane scrollback across full server restarts.
 # Closest equivalent to @resurrect-capture-pane-contents, which this setup drops.
 pane_history = true
+
+[advanced]
+# Per-pane scrollback cap, in bytes. There is no "unlimited" value -- herdr
+# mirrors Ghostty's scrollback-limit, where 0 means *no* scrollback rather
+# than infinite. 256 MiB is ~3M lines of agent output per pane: effectively
+# infinite for a working day, while still bounding worst-case memory.
+# Raise it further if a long-running pane ever truncates; it is RAM per pane,
+# so the real ceiling is this value times the number of open panes.
+scrollback_limit_bytes = 268435456
